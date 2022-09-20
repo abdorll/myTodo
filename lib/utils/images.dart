@@ -3,6 +3,7 @@ const chat = 'assets/chat.png';
 const search = 'assets/search.png';
 const typing = 'assets/typing.gif';
 const schedule = 'assets/schedule.gif';
+const message = 'assets/message.gif';
 const searchResult = 'assets/search_result.gif';
 const busy1 = 'assets/busy_1.gif';
 const busy2 = 'assets/busy_2.gif';

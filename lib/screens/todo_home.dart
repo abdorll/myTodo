@@ -30,7 +30,22 @@ class TodoHome extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _TodoHomeState();
 }
 
-class _TodoHomeState extends ConsumerState<TodoHome> {
+class _TodoHomeState extends ConsumerState<TodoHome>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<EachTodo> eachTodoItem =
@@ -95,6 +110,7 @@ class _TodoHomeState extends ConsumerState<TodoHome> {
                         child: TabBar(
                             indicatorWeight: 2,
                             labelColor: blue,
+                            controller: _tabController,
                             indicatorPadding: EdgeInsets.all(10),
                             unselectedLabelColor: white,
                             labelStyle: GoogleFonts.combo(
@@ -124,46 +140,49 @@ class _TodoHomeState extends ConsumerState<TodoHome> {
             ),
             YMargin(10),
             Expanded(
-                child: TabBarView(children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: eachTodoItem.length == 0
-                    ? Center(
-                        child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            busy1,
-                            height: 200,
+                child: TabBarView(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: eachTodoItem.length == 0
+                      ? Center(
+                          child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              busy1,
+                              height: 200,
+                            ),
+                            YMargin(20),
+                            TextOf(
+                                'No todo available. Click the add icon to create',
+                                15,
+                                black,
+                                FontWeight.w500)
+                          ],
+                        ))
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: eachTodoItem,
                           ),
-                          YMargin(20),
-                          TextOf(
-                              'No todo available. Click the add icon to create',
-                              15,
-                              black,
-                              FontWeight.w500)
-                        ],
-                      ))
-                    : SingleChildScrollView(
-                        child: Column(
-                          children: eachTodoItem,
                         ),
-                      ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: CompletedTab(eachTodoItem: eachTodoItem),
-              )
-            ]))
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: CompletedTab(eachTodoItem: eachTodoItem),
+                )
+              ],
+              controller: _tabController,
+            ))
           ],
         ),
         floatingActionButton: FloatingActionButton(

@@ -28,7 +28,6 @@ class InputField extends StatelessWidget {
         onChanged: onChanged,
         cursorColor: blue.withOpacity(0.6),
         keyboardType: inputType,
-        //keyboardAppearance: ,
         style: GoogleFonts.mulish(),
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(

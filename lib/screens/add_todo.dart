@@ -30,23 +30,6 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
 
   @override
   void initState() {
-    // print('todo length ${todoInput.length}');
-    // if (ref.read(doneClicked) == true) {
-    //   todoInput.clear();
-    //   todoInput.add(const YMargin(10));
-    //   WidgetsBinding.instance.addPostFrameCallback(
-    //       (_) => ref.read(saveProvider.notifier).state = false);
-    //   WidgetsBinding.instance.addPostFrameCallback(
-    //       (_) => ref.read(allFieldsCompleted.notifier).state = false);
-
-    //   WidgetsBinding.instance.addPostFrameCallback((_) =>
-    //       ref.read(selectedTodo.notifier).state = ref.read(selectedTodo) - 1);
-    //   print(ref.read(selectedTodo));
-    //   title = null;
-    //   description = null;
-    //   todoCategory = null;
-    // }
-    // print(ref.read(doneClicked));
     textController = TextEditingController();
     todoInput.length == 1
         ? todoInput.add(buildMessage(
@@ -70,9 +53,6 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
     "What's your todo title?",
     'Give a decription'
   ];
-
-  // bool allFieldsCompleted = false;
-  // bool get _allFieldsCompleted => allFieldsCompleted;
 
   static List<TodoCategories> categories = [
     TodoCategories(category: '🏪 Shop', id: 0),
@@ -164,12 +144,8 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
             : () {
                 todoCategory = singleCategory.category;
                 ref.watch(selectedTodo.notifier).state = singleCategory.id!;
-                print(singleCategory.id);
                 Navigator.pop(context);
                 Navigate.forward(context, const AddTodoScreen());
-                print('allFieldsCompleted: $allFieldsCompleted');
-                print(
-                    'title: $title -- description: $description -- category: $todoCategory');
                 String itemCat = categories
                     .where((text) => text.id == ref.watch(selectedTodo))
                     .toList()[0]
@@ -183,26 +159,22 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                     .toList();
 
                 if (alreadyPresent.length > 0) {
-                  print('Sorry trial length is: ${alreadyPresent.length}');
                   todoInput.add(buildMessage(Column(children: [
                     todoResponse(TextOf(
                         "Sorry, Request failed!", 15, black, FontWeight.w400)),
                     todoResponse(Container(
-                      child: Expanded(
-                        child: TextOf(
-                            "${alreadyPresent.length.toString()} task of this same category is yet to be completed",
-                            15,
-                            black,
-                            FontWeight.w400,
-                            align: TextAlign.left),
-                      ),
+                      child: TextOf(
+                          "${alreadyPresent.length.toString()} task of this same category is yet to be completed",
+                          15,
+                          black,
+                          FontWeight.w400,
+                          align: TextAlign.left),
                       constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.8),
                     )),
                     YMargin(70)
                   ])));
                 } else {
-                  print('All set trial length is: ${alreadyPresent.length}');
                   ref.watch(saveProvider.notifier).state = true;
                   todoInput.add(buildMessage(Column(children: [
                     todoResponse(
@@ -320,8 +292,6 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                                               ref
                                                   .read(saveProvider.notifier)
                                                   .state = false;
-
-                                              // var selectedTodo = StateProvider<int>((_) => -1);
                                               todoInput.clear();
                                               todoInput.add(const YMargin(10));
                                               title = null;
@@ -358,8 +328,6 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                                               ref
                                                   .read(saveProvider.notifier)
                                                   .state = false;
-
-                                              // var selectedTodo = StateProvider<int>((_) => -1);
                                               todoInput.clear();
                                               todoInput.add(const YMargin(10));
                                               title = null;
@@ -396,8 +364,6 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                                             Navigator.pop(context);
                                             Navigate.forwardForever(
                                                 context, const AddTodoScreen());
-
-                                            // var selectedTodo = StateProvider<int>((_) => -1);
                                             todoInput.clear();
                                             todoInput.add(const YMargin(10));
                                             title = null;
@@ -452,7 +418,6 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                                 onTap: buttonEnabled() == true
                                     ? () {
                                         textController!.clear();
-                                        print(inputedString);
                                         setState(() {
                                           ((title == null) &
                                                   (description == null))
@@ -531,9 +496,6 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                                         setState(() {
                                           inputedString = '';
                                         });
-
-                                        print('title is... $title');
-                                        print('desctiptopn is... $description');
                                       }
                                     : () {},
                                 child: CircleAvatar(

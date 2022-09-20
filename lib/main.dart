@@ -12,7 +12,6 @@ Widget? homeScreen;
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  FlutterNativeSplash.remove();
   var path = await getApplicationDocumentsDirectory();
   Hive.init(path.path);
   await Hive.openBox(userBox);
@@ -21,6 +20,7 @@ void main() async {
       ? homeScreen = TodoHome()
       : homeScreen = IntroScreen();
   runApp(const MyApp());
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatefulWidget {
@@ -34,10 +34,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final botToastBuilder = BotToastInit();
+
     return ProviderScope(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'ToDo App',
+        title: 'MyTodo',
         home: homeScreen,
         builder: (context, child) {
           return botToastBuilder(context, child);

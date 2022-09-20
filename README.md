@@ -13,6 +13,7 @@ I was able to complete the todo app:
 
 # GitHub link
 https://github.com/abdorll/myTodo
+
 # Video screenshot 
 Link to video screenshot:
 https://drive.google.com/file/d/1UyyVQvgp-WcgAFM63VuBlSuboxqc3CRl/view?usp=sharing

@@ -19,8 +19,6 @@ class IntroScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = PageController();
-
-    // /int currenIndex = 0;
     void changeIndex(int value) {
       ref.read(currenIndex.notifier).state = value;
     }
@@ -44,6 +42,14 @@ class IntroScreen extends ConsumerWidget {
               title: 'Stay organised',
               subtitle:
                   'Organise your day with schedules you create to be more productive',
+            ),
+            IntroPageIntems(
+              imagePath: message,
+              controller: controller,
+              currenIndedx: ref.watch(currenIndex),
+              title: 'Chat',
+              subtitle:
+                  "Create schedules by chatting in the usual way you're used to",
             ),
           ],
         ));
@@ -94,10 +100,12 @@ class IntroPageIntems extends ConsumerWidget {
                       myIndicator(0, currenIndedx),
                       XMargin(10),
                       myIndicator(1, currenIndedx),
+                      XMargin(10),
+                      myIndicator(2, currenIndedx),
                     ],
                   ),
                   YMargin(20),
-                  currenIndedx == 1
+                  currenIndedx == 2
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
