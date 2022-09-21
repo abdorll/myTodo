@@ -11,7 +11,7 @@ class Navigate {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: ((context) {
       return page;
-    })), (route) => true);
+    })), (route) => false);
   }
 
   static back(context) {

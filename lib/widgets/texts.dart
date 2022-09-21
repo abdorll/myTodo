@@ -20,6 +20,7 @@ class TextOf extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
         textAlign: align,
+        overflow: TextOverflow.ellipsis,
         style: GoogleFonts.combo(
             wordSpacing: wordSpacing,
             decoration: decoration,

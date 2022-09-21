@@ -59,8 +59,6 @@ class _TodoHomeState extends ConsumerState<TodoHome>
         completedStatus: todo.completedStatus,
       );
     });
-//completedTodos
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -209,12 +207,18 @@ class CompletedTab extends StatefulWidget {
 }
 
 class _CompletedTabState extends State<CompletedTab> {
+  List<Widget>? completedList;
   @override
-  Widget build(BuildContext context) {
-    List<Widget> completedList = widget.eachTodoItem
+  void initState() {
+    completedList = widget.eachTodoItem
         .where((element) => element.completedStatus == true)
         .toList();
-    return completedList.length == 0
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return completedList!.length == 0
         ? Center(
             child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -233,7 +237,7 @@ class _CompletedTabState extends State<CompletedTab> {
           ))
         : SingleChildScrollView(
             child: Column(
-              children: completedList,
+              children: completedList!,
             ),
           );
   }

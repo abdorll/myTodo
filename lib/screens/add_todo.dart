@@ -26,8 +26,6 @@ class AddTodoScreen extends ConsumerStatefulWidget {
 }
 
 class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
-  static var value;
-
   @override
   void initState() {
     textController = TextEditingController();
@@ -145,48 +143,24 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                 todoCategory = singleCategory.category;
                 ref.watch(selectedTodo.notifier).state = singleCategory.id!;
                 Navigator.pop(context);
-                Navigate.forward(context, const AddTodoScreen());
+                Navigate.forwardForever(context, const AddTodoScreen());
                 String itemCat = categories
                     .where((text) => text.id == ref.watch(selectedTodo))
                     .toList()[0]
                     .category!;
-                todoInput.add(
-                    userInput('Selected category: ${itemCat.toUpperCase()}'));
-
-                var alreadyPresent = ref
-                    .read(todoListProvider)
-                    .where((element) => element.category == itemCat)
-                    .toList();
-
-                if (alreadyPresent.length > 0) {
-                  todoInput.add(buildMessage(Column(children: [
-                    todoResponse(TextOf(
-                        "Sorry, Request failed!", 15, black, FontWeight.w400)),
-                    todoResponse(Container(
-                      child: TextOf(
-                          "${alreadyPresent.length.toString()} task of this same category is yet to be completed",
-                          15,
-                          black,
-                          FontWeight.w400,
-                          align: TextAlign.left),
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.8),
-                    )),
-                    YMargin(70)
-                  ])));
-                } else {
-                  ref.watch(saveProvider.notifier).state = true;
-                  todoInput.add(buildMessage(Column(children: [
-                    todoResponse(
-                        TextOf("You're all set", 15, black, FontWeight.w400)),
-                    todoResponse(TextOf(
-                        "Click 'Done' to save and 'Restart' to start all over",
-                        15,
-                        black,
-                        FontWeight.w400)),
-                    YMargin(70)
-                  ])));
-                }
+                todoInput.add(userInput(
+                    'Selected category: ${itemCat.toUpperCase()}', context));
+                ref.watch(saveProvider.notifier).state = true;
+                todoInput.add(buildMessage(Column(children: [
+                  todoResponse(
+                      TextOf("You're all set", 15, black, FontWeight.w400)),
+                  todoResponse(TextOf(
+                      "Click 'Done' to save and 'Restart' to start all over",
+                      15,
+                      black,
+                      FontWeight.w400)),
+                  YMargin(70)
+                ])));
                 todoInput.add(Container());
               },
         child: category(singleCategory),
@@ -361,9 +335,8 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                                         XMargin(10),
                                         InkWell(
                                           onTap: () {
-                                            Navigator.pop(context);
                                             Navigate.forwardForever(
-                                                context, const AddTodoScreen());
+                                                context, TodoHome());
                                             todoInput.clear();
                                             todoInput.add(const YMargin(10));
                                             title = null;
@@ -434,7 +407,8 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
                                                 : (title != null) &&
                                                         (description != null)
                                                     ? description!
-                                                    : '')));
+                                                    : ''),
+                                            context));
 
                                         todoInput
                                             .add(
@@ -527,23 +501,27 @@ class AddTodoScreenState extends ConsumerState<AddTodoScreen> {
     );
   }
 
-  static Row userInput(String text) {
+  static Row userInput(String text, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Column(
-          children: [
-            const YMargin(10),
-            Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                    color: blue,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20))),
-                child: TextOf(text, 15, white, FontWeight.w400)),
-          ],
+        Container(
+          constraints:
+              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
+          child: Column(
+            children: [
+              const YMargin(10),
+              Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                      color: blue,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20))),
+                  child: TextOf(text, 15, white, FontWeight.w400)),
+            ],
+          ),
         ),
       ],
     );
