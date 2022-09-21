@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_todo/function/navigate.dart';
 import 'package:my_todo/model/todos_list.dart';
 import 'package:my_todo/screens/todo_home.dart';
 import 'package:my_todo/utils/color.dart';
 import 'package:my_todo/utils/images.dart';
 import 'package:my_todo/widgets/each_todo.dart';
+import 'package:my_todo/widgets/iconss.dart';
 import 'package:my_todo/widgets/spacing.dart';
 import 'package:my_todo/widgets/texts.dart';
 
@@ -51,7 +53,15 @@ class _SearchSreenState extends ConsumerState<SearchSreen> {
                   const YMargin(40),
                   Row(
                     children: [
-                      TextOf('Seach Todo', 30, white, FontWeight.w600)
+                      InkWell(
+                        child:
+                            IconOf(Icons.arrow_back_ios_new_rounded, 20, white),
+                        onTap: () {
+                          Navigate.back(context);
+                        },
+                      ),
+                      XMargin(10),
+                      TextOf('Seach Todo', 30, white, FontWeight.w600),
                     ],
                   ),
                   searchBox(),

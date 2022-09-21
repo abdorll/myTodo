@@ -104,7 +104,7 @@ class _EachTodoState extends ConsumerState<EachTodo> {
 
                               uncompletedLength - 1 == 1
                                   ? text = 'todo'
-                                  : 'todos';
+                                  : text = 'todos';
                               setState(() {
                                 if (uncompletedLength > 1) {
                                   Alerts.failed(
