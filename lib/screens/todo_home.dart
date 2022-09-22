@@ -20,7 +20,7 @@ StateProvider<List<TodoList>> todoListProvider = StateProvider((_) => [
           title: 'Check MyTodo',
           description: 'View my daily schedules',
           category: '🥰 Social',
-          completedStatus: false)
+          completedStatus: true)
     ]);
 
 class TodoHome extends ConsumerStatefulWidget {

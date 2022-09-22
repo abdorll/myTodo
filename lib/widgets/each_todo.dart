@@ -1,9 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_todo/function/helpers.dart';
 import 'package:my_todo/function/navigate.dart';
 import 'package:my_todo/screens/todo_home.dart';
@@ -88,52 +86,91 @@ class _EachTodoState extends ConsumerState<EachTodo> {
                       YMargin(5),
                       Row(
                         children: [
-                          InkWell(
-                            child: widget.completedStatus == true
-                                ? IconOf(Icons.check_circle_outline_rounded, 20,
-                                    blue)
-                                : IconOf(Icons.circle_outlined, 20, blue),
-                            onTap: () {
-                              var uncompletedLength = ref
-                                  .read(todoListProvider)
-                                  .where((element) =>
-                                      element.completedStatus == false &&
-                                      element.category == widget.category)
-                                  .toList()
-                                  .length;
-
-                              uncompletedLength - 1 == 1
-                                  ? text = 'todo'
-                                  : text = 'todos';
-                              setState(() {
-                                if (uncompletedLength > 1) {
-                                  Alerts.failed(
-                                      "Can't be completed. ${uncompletedLength - 1} $text of this same category not completed");
-                                } else {
-                                  widget.completedStatus =
-                                      !widget.completedStatus;
-                                  widget.completedStatus == true
-                                      ? Alerts.success(
-                                          "Successfully compled this todo")
-                                      : Alerts.close();
-                                }
-                                setState(() {});
-                              });
-                              setState(() {});
-                            },
-                          ),
-                          XMargin(20),
-                          InkWell(
-                            child: IconOf(Icons.delete_forever, 20, red),
-                            onTap: () {
-                              setState(() {
-                                ref.read(todoListProvider).removeWhere(
-                                    (item) => item.id == widget.id);
-                              });
-                              Navigate.forwardForever(context, Tester());
-                              Navigate.forwardForever(context, TodoHome());
-                            },
-                          ),
+                          widget.id == '001'
+                              ? IconOf(
+                                  Icons.check_circle_outline_rounded, 20, blue)
+                              : InkWell(
+                                  child: widget.completedStatus == true
+                                      ? IconOf(
+                                          Icons.check_circle_outline_rounded,
+                                          20,
+                                          blue)
+                                      : IconOf(Icons.circle_outlined, 20, blue),
+                                  onTap: () {
+                                    for (int i = 1;
+                                        i < ref.read(todoListProvider).length;
+                                        i++) {
+                                      if ((ref.read(todoListProvider)[i].id ==
+                                              widget.id) &&
+                                          ref
+                                                  .read(todoListProvider)[i]
+                                                  .completedStatus ==
+                                              false &&
+                                          ref
+                                                  .read(todoListProvider)[i - 1]
+                                                  .completedStatus ==
+                                              true) {
+                                        setState(() {
+                                          widget.completedStatus = true;
+                                          ref
+                                                  .read(todoListProvider)[i]
+                                                  .completedStatus =
+                                              widget.completedStatus;
+                                        });
+                                        setState(() {});
+                                        Alerts.success(
+                                            "Successfully compled this todo");
+                                        setState(() {});
+                                        print(
+                                            'TODO BEFORE IS ${ref.read(todoListProvider)[i - 1].completedStatus}');
+                                        print(
+                                            'TODO AFTER IS ${ref.read(todoListProvider)[i].completedStatus}');
+                                        setState(() {});
+                                      } else if ((ref
+                                                  .read(todoListProvider)[i]
+                                                  .id ==
+                                              widget.id) &&
+                                          ref
+                                                  .read(todoListProvider)[i]
+                                                  .completedStatus ==
+                                              false &&
+                                          ref
+                                                  .read(todoListProvider)[i - 1]
+                                                  .completedStatus ==
+                                              false) {
+                                        Alerts.failed(
+                                            "The todo before this isn't completed");
+                                      }
+                                    }
+                                    // if (uncompletedLength > 1) {
+                                    //   Alerts.failed(
+                                    //       "Can't be completed. ${uncompletedLength - 1} $text of this same category not completed");
+                                    // } else {
+                                    //   widget.completedStatus =
+                                    //       !widget.completedStatus;
+                                    //   widget.completedStatus == true
+                                    //       ? Alerts.success(
+                                    //           "Successfully compled this todo")
+                                    //       : Alerts.close();
+                                    // }
+                                    setState(() {});
+                                  },
+                                ),
+                          widget.id == '001' ? XMargin(10) : XMargin(20),
+                          widget.id == '001'
+                              ? TextOf('Completed', 12, blue, FontWeight.w400)
+                              : InkWell(
+                                  child: IconOf(Icons.delete_forever, 20, red),
+                                  onTap: () {
+                                    setState(() {
+                                      ref.read(todoListProvider).removeWhere(
+                                          (item) => item.id == widget.id);
+                                    });
+                                    Navigate.forwardForever(context, Tester());
+                                    Navigate.forwardForever(
+                                        context, TodoHome());
+                                  },
+                                ),
                         ],
                       )
                     ],

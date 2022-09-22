@@ -6,6 +6,6 @@ class TodoList {
     this.title,
     this.description,
     this.category,
-    this.completedStatus = false,
+    this.completedStatus = true,
   });
 }
