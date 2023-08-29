@@ -16,7 +16,6 @@ https://github.com/abdorll/myTodo
 
 # Video screenshot 
 Link to video screenshot:
-https://drive.google.com/file/d/1UyyVQvgp-WcgAFM63VuBlSuboxqc3CRl/view?usp=sharing
-
+https://drive.google.com/file/d/1zxGM8xQiESVzf5LgjzIEIwWyA3XP7Wj5/view?usp=sharing
 # App generated APKThis is the link to download the app and have its feel:
 https://drive.google.com/file/d/1vS3RkA_sPh4YqsBBXMKxP6I0P3hU1oM4/view?usp=sharing
